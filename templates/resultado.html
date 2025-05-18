@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minha Honra Jus - Contestação Jurídica</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Times+New+Roman:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1e3a8a;
+            --secondary-color: #2563eb;
+            --accent-color: #3b82f6;
+            --text-color: #1f2937;
+            --light-bg: #f8fafc;
+        }
+        
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 12pt;
+            line-height: 1.5;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light-bg);
+            color: var(--text-color);
+        }
+        
+        .document-container {
+            max-width: 21cm;
+            margin: 3rem auto;
+            background-color: white;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+            padding: 3cm 2cm 2cm 3cm;
+            position: relative;
+        }
+        
+        .brand-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        
+        .brand-logo {
+            font-size: 24pt;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .brand-tagline {
+            font-size: 10pt;
+            color: var(--secondary-color);
+            font-style: italic;
+        }
+        
+        .document-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .document-header h1 {
+            font-weight: 700;
+            font-size: 14pt;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .address-line {
+            font-size: 12pt;
+            margin-bottom: 0.5rem;
+        }
+        
+        .process-info {
+            margin: 2rem 0;
+            text-align: center;
+            padding: 1rem;
+            background-color: var(--light-bg);
+            border-radius: 4px;
+        }
+        
+        .section-container {
+            margin-bottom: 2rem;
+        }
+        
+        .section-title {
+            font-weight: 700;
+            font-size: 12pt;
+            text-transform: uppercase;
+            margin: 2rem 0 1rem 0;
+            text-align: center;
+            color: var(--primary-color);
+            border-bottom: 1px solid var(--accent-color);
+            padding-bottom: 0.5rem;
+        }
+        
+        .paragraph {
+            text-indent: 2cm;
+            margin-bottom: 1.2rem;
+            text-align: justify;
+        }
+        
+        .subsection {
+            margin-left: 2cm;
+            margin-bottom: 1.5rem;
+        }
+        
+        .subsection-title {
+            font-weight: 600;
+            font-size: 12pt;
+            margin-bottom: 1rem;
+            color: var(--secondary-color);
+        }
+        
+        .subsection-content {
+            text-indent: 2cm;
+            margin-bottom: 1.5rem;
+        }
+        
+        .documents-section {
+            margin-top: 3rem;
+        }
+        
+        .documents-list {
+            margin-left: 2cm;
+        }
+        
+        .documents-list li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .signature-area {
+            margin-top: 4rem;
+            text-align: center;
+        }
+        
+        .signature-line {
+            width: 60%;
+            border-top: 1px solid var(--primary-color);
+            margin: 1rem auto;
+        }
+        
+        .page-number {
+            position: absolute;
+            bottom: 1cm;
+            right: 2cm;
+            font-size: 10pt;
+            color: var(--secondary-color);
+        }
+        
+        .control-bar {
+            position: sticky;
+            top: 0;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .control-bar .btn {
+            margin-left: 0.5rem;
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+        
+        .control-bar .btn:hover {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+        
+        .watermark {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            opacity: 0.1;
+            font-size: 3rem;
+            color: var(--primary-color);
+            transform: rotate(-45deg);
+            pointer-events: none;
+        }
+        
+        .alert-docx {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 100;
+            max-width: 300px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            display: none;
+        }
+        
+        .debug-panel {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background-color: rgba(0,0,0,0.7);
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            z-index: 1000;
+            max-width: 500px;
+            max-height: 200px;
+            overflow: auto;
+            font-family: monospace;
+            font-size: 12px;
+            display: none;
+        }
+        
+        .legal-reference {
+            font-weight: 700;
+            color: var(--secondary-color);
+        }
+        
+        .brand-footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--primary-color);
+            font-size: 10pt;
+            color: var(--secondary-color);
+        }
+        
+        @media print {
+            .document-container {
+                box-shadow: none;
+                margin: 0;
+                padding: 3cm 2cm 2cm 3cm;
+            }
+            
+            body {
+                background-color: white;
+            }
+            
+            .control-bar {
+                display: none;
+            }
+            
+            @page {
+                size: A4;
+                margin: 3cm 2cm 2cm 3cm;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="watermark">MINHA HONRA JUS</div>
+    
+    <div class="debug-panel" id="debugPanel"></div>
+    
+    <div class="alert alert-info alert-docx" id="docxAlert">
+        <h5><i class="fas fa-file-word"></i> Documento Word</h5>
+        <p>Para formatação profissional, baixe o documento Word pronto para uso.</p>
+        <a href="/download/docx?id={{ result_id }}" class="btn btn-primary btn-sm w-100">Baixar DOCX</a>
+    </div>
+    
+    <div class="control-bar">
+        <div>
+            <span class="me-2"><i class="fas fa-gavel"></i> Minha Honra Jus - Contestação Jurídica</span>
+        </div>
+        <div>
+            <button onclick="downloadDocx()" class="btn btn-primary">
+                <i class="fas fa-file-word"></i> Baixar Word
+            </button>
+            <button onclick="downloadTxt()" class="btn btn-secondary">
+                <i class="fas fa-file-alt"></i> Baixar TXT
+            </button>
+            <button onclick="window.print()" class="btn btn-info">
+                <i class="fas fa-print"></i> Imprimir
+            </button>
+            <button onclick="copyToClipboard()" class="btn btn-success">
+                <i class="fas fa-copy"></i> Copiar
+            </button>
+            <a href="/" class="btn btn-sm btn-outline-light">
+                <i class="fas fa-home"></i> Voltar
+            </a>
+        </div>
+    </div>
+    
+    <div class="document-container">
+        <div class="brand-header">
+            <div class="brand-logo">MINHA HONRA JUS</div>
+            <div class="brand-tagline">Excelência em Documentos Jurídicos</div>
+        </div>
+        
+        <div class="document-header">
+            <h1>EXCELENTÍSSIMO(A) SENHOR(A) DOUTOR(A) JUIZ(A) DE DIREITO</h1>
+            <p class="address-line">DA VARA CÍVEL DO FORO {{ foro|default('[FORO]') }} DA COMARCA DE {{ comarca|default('SÃO PAULO') }}</p>
+        </div>
+        
+        <div class="process-info">
+            <p><strong>Processo n.º:</strong> {{ numero_processo|default('[NÚMERO DO PROCESSO]') }}</p>
+            <p><strong>Autor:</strong> {{ autor_nome|default('RAFAEL DA ROCHA') }}</p>
+            <p><strong>Réu:</strong> {{ reu_nome|default('FUTURAS APOSTAS LTDA') }}</p>
+        </div>
+        
+        <div class="section-container">
+            <h2 class="section-title">CONTESTAÇÃO</h2>
+            
+            {% for section in contestacao_sections %}
+            <div class="section">
+                <h2 class="section-title">{{ section.title }}</h2>
+                <div class="section-content">
+                    {% if section.content %}
+                    <p class="paragraph">{{ section.content|safe }}</p>
+                    {% endif %}
+                    
+                    {% for subsection in section.subsections %}
+                    <div class="subsection">
+                        <h3 class="subsection-title">{{ subsection.number }}. {{ subsection.title }}</h3>
+                        <div class="subsection-content">
+                            <p class="paragraph">{{ subsection.content|safe }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="documents-section">
+            <h2 class="section-title">DOCUMENTOS ANEXOS</h2>
+            <ol class="documents-list">
+                <li>Procuração com poderes especiais</li>
+                <li>Documentos constitutivos da empresa ré</li>
+                <li>Termos e Condições da plataforma Brazino777</li>
+                <li>Registros de apostas do Autor</li>
+                <li>Laudo pericial (quando disponível)</li>
+            </ol>
+        </div>
+        
+        <div class="signature-area">
+            <div class="legal-footer">
+                <p>Termos em que,<br>Pede deferimento.</p>
+                <p>{{ data_atual|default('18/05/2025') }}</p>
+                <div class="signature-line"></div>
+                <p class="lawyer-info">{{ advogado_nome|default('GUILHERME KASCHNY BASTIAN') }}<br>OAB/{{ advogado_estado|default('SP') }} {{ advogado_numero|default('266.795') }}</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="brand-footer">
+        <p>Documento gerado por Minha Honra Jus - Sistema de Geração de Documentos Jurídicos</p>
+        <p>Data de geração: {{ data_atual|default('18/05/2025') }}</p>
+    </div>
+    
+    <div class="page-number"></div>
+    
+    <script>
+        // Função para adicionar logs ao painel de depuração
+        function logDebug(message) {
+            const panel = document.getElementById('debugPanel');
+            const timestamp = new Date().toLocaleTimeString();
+            const logLine = document.createElement('div');
+            logLine.textContent = `[${timestamp}] ${message}`;
+            panel.appendChild(logLine);
+            
+            // Mostrar o painel se estiver oculto
+            panel.style.display = 'block';
+            
+            // Rolar para o final
+            panel.scrollTop = panel.scrollHeight;
+            
+            // Limitar o número de linhas
+            while (panel.childNodes.length > 50) {
+                panel.removeChild(panel.firstChild);
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Log para debugging
+            logDebug('Página carregada');
+            logDebug('ID do resultado: {{ result_id }}');
+            
+            // Verificar dados JSON
+            const jsonElement = document.getElementById('jsonData');
+            if (jsonElement) {
+                try {
+                    const jsonText = jsonElement.textContent.trim();
+                    if (jsonText) {
+                        logDebug(`JSON encontrado (${jsonText.length} caracteres)`);
+                        // Tentar fazer parse para verificar validade
+                        const jsonData = JSON.parse(jsonText);
+                        logDebug('JSON válido: ' + (typeof jsonData === 'object' ? 'Sim' : 'Não'));
+                        
+                        // Aplicar dados extraídos à contestação
+                        try {
+                            if (jsonData.autor && jsonData.autor.nome) {
+                                document.querySelectorAll('.autor-nome').forEach(el => {
+                                    el.textContent = jsonData.autor.nome;
+                                });
+                            }
+                            
+                            if (jsonData.reu && jsonData.reu.nome) {
+                                document.querySelectorAll('.reu-nome').forEach(el => {
+                                    el.textContent = jsonData.reu.nome;
+                                });
+                            }
+                            
+                            // Atualizar outras informações conforme necessário
+                        } catch (e) {
+                            logDebug('Erro ao aplicar dados JSON: ' + e.message);
+                        }
+                    } else {
+                        logDebug('JSON vazio');
+                    }
+                } catch (e) {
+                    logDebug('Erro ao processar JSON: ' + e.message);
+                }
+            } else {
+                logDebug('Elemento JSON não encontrado');
+            }
+            
+            // Verificar seções da contestação
+            const contestacaoElement = document.getElementById('contestacaoData');
+            if (contestacaoElement) {
+                const sections = contestacaoElement.querySelectorAll('.section-title');
+                logDebug(`Seções encontradas: ${sections.length}`);
+                
+                // Verificar conteúdo
+                const content = contestacaoElement.textContent.trim();
+                logDebug(`Contestação: ${content.length} caracteres`);
+                
+                // Aplicar formatação especial aos parágrafos
+                const paragraphs = document.querySelectorAll('.section-content p');
+                paragraphs.forEach(p => {
+                    p.style.textIndent = '2em';
+                    p.style.textAlign = 'justify';
+                    p.style.marginBottom = '1.2rem';
+                });
+                
+                // Formatar listas numeradas em seções de pedidos
+                const pedidosSection = Array.from(sections).find(s => 
+                    s.textContent.toLowerCase().includes('pedido') || 
+                    s.textContent.toLowerCase().includes('requer')
+                );
+                
+                if (pedidosSection) {
+                    logDebug('Formatando seção de pedidos');
+                    const pedidosSectionContent = pedidosSection.nextElementSibling;
+                    if (pedidosSectionContent) {
+                        const pedidosText = pedidosSectionContent.innerHTML;
+                        // Tentar identificar pedidos numerados (a, b, c, ...) ou (1, 2, 3, ...)
+                        const formattedPedidos = pedidosText.replace(
+                            /([a-z]\)|[0-9]\.)\s*(.*?)(?=<br>|$)/gi, 
+                            '<li>$2</li>'
+                        );
+                        
+                        if (formattedPedidos !== pedidosText) {
+                            pedidosSectionContent.innerHTML = '<ul class="pedidos-list">' + 
+                                formattedPedidos.replace(/<br>/g, '') + 
+                                '</ul>';
+                        }
+                    }
+                }
+            } else {
+                logDebug('Elemento contestação não encontrado');
+            }
+            
+            // Copy to clipboard functionality
+            document.getElementById('copyButton').addEventListener('click', function() {
+                const contestacaoText = document.getElementById('contestacaoData').innerText;
+                logDebug(`Copiando contestação (${contestacaoText.length} caracteres)`);
+                navigator.clipboard.writeText(contestacaoText)
+                    .then(() => {
+                        alert('Contestação copiada!');
+                        logDebug('Contestação copiada para clipboard');
+                    })
+                    .catch(err => {
+                        alert('Erro ao copiar: ' + err);
+                        logDebug('Erro ao copiar: ' + err);
+                    });
+            });
+            
+            // Download as text file
+            document.getElementById('downloadButton').addEventListener('click', function() {
+                const contestacaoText = document.getElementById('contestacaoData').innerText;
+                logDebug(`Baixando TXT (${contestacaoText.length} caracteres)`);
+                const blob = new Blob([contestacaoText], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'contestacao_juridica.txt';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                logDebug('Download de TXT concluído');
+            });
+            
+            // Mostrar alerta DOCX após alguns segundos
+            setTimeout(function() {
+                document.getElementById('docxAlert').style.display = 'block';
+                logDebug('Alerta DOCX exibido');
+            }, 3000);
+            
+            // Ativar/desativar painel de depuração com Ctrl+Shift+L
+            document.addEventListener('keydown', function(e) {
+                if (e.ctrlKey && e.shiftKey && e.key === 'L') {
+                    const panel = document.getElementById('debugPanel');
+                    panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+                }
+            });
+            
+            // Adicionar numeração de páginas
+            const container = document.querySelector('.document-container');
+            const pages = Math.ceil(container.scrollHeight / 2970); // Altura aproximada de uma página A4 em pixels
+            
+            for (let i = 1; i <= pages; i++) {
+                const pageNumber = document.createElement('div');
+                pageNumber.className = 'page-number';
+                pageNumber.textContent = i;
+                container.appendChild(pageNumber);
+            }
+        });
+
+        function downloadDocx() {
+            try {
+                const contestacaoData = {
+                    foro: document.querySelector('.address-line').textContent.match(/FORO (.*?) DA/)?.[1] || '[FORO]',
+                    comarca: document.querySelector('.address-line').textContent.match(/COMARCA DE (.*?)$/)?.[1] || 'SÃO PAULO',
+                    numero_processo: document.querySelector('.process-info').textContent.match(/Processo n.º: (.*?)(?:\n|$)/)?.[1] || '[NÚMERO DO PROCESSO]',
+                    autor_nome: document.querySelector('.process-info').textContent.match(/Autor: (.*?)(?:\n|$)/)?.[1] || '[AUTOR]',
+                    reu_nome: document.querySelector('.process-info').textContent.match(/Réu: (.*?)(?:\n|$)/)?.[1] || '[RÉU]',
+                    advogado_nome: document.querySelector('.lawyer-info').textContent.split('\n')[0] || '[NOME DO ADVOGADO]',
+                    advogado_estado: document.querySelector('.lawyer-info').textContent.match(/OAB\/([A-Z]{2})/)?.[1] || 'XX',
+                    advogado_numero: document.querySelector('.lawyer-info').textContent.match(/OAB\/[A-Z]{2} (\d+)/)?.[1] || '000000',
+                    secoes: Array.from(document.querySelectorAll('.section')).map(section => ({
+                        titulo: section.querySelector('.section-title').textContent,
+                        paragrafos: Array.from(section.querySelectorAll('.paragraph')).map(p => p.textContent.trim())
+                    }))
+                };
+
+                console.log('Dados coletados:', contestacaoData);
+
+                const queryString = Object.entries(contestacaoData)
+                    .map(([key, value]) => `${key}=${encodeURIComponent(JSON.stringify(value))}`)
+                    .join('&');
+
+                window.location.href = `/download/docx?${queryString}`;
+            } catch (error) {
+                console.error('Erro ao gerar DOCX:', error);
+                alert('Erro ao gerar documento Word. Por favor, tente novamente.');
+            }
+        }
+
+        function downloadTxt() {
+            try {
+                const contestacaoData = {
+                    foro: document.querySelector('.address-line').textContent.match(/FORO (.*?) DA/)?.[1] || '[FORO]',
+                    comarca: document.querySelector('.address-line').textContent.match(/COMARCA DE (.*?)$/)?.[1] || 'SÃO PAULO',
+                    numero_processo: document.querySelector('.process-info').textContent.match(/Processo n.º: (.*?)(?:\n|$)/)?.[1] || '[NÚMERO DO PROCESSO]',
+                    autor_nome: document.querySelector('.process-info').textContent.match(/Autor: (.*?)(?:\n|$)/)?.[1] || '[AUTOR]',
+                    reu_nome: document.querySelector('.process-info').textContent.match(/Réu: (.*?)(?:\n|$)/)?.[1] || '[RÉU]',
+                    advogado_nome: document.querySelector('.lawyer-info').textContent.split('\n')[0] || '[NOME DO ADVOGADO]',
+                    advogado_estado: document.querySelector('.lawyer-info').textContent.match(/OAB\/([A-Z]{2})/)?.[1] || 'XX',
+                    advogado_numero: document.querySelector('.lawyer-info').textContent.match(/OAB\/[A-Z]{2} (\d+)/)?.[1] || '000000',
+                    secoes: Array.from(document.querySelectorAll('.section')).map(section => ({
+                        titulo: section.querySelector('.section-title').textContent,
+                        paragrafos: Array.from(section.querySelectorAll('.paragraph')).map(p => p.textContent.trim())
+                    }))
+                };
+
+                console.log('Dados coletados:', contestacaoData);
+
+                const queryString = Object.entries(contestacaoData)
+                    .map(([key, value]) => `${key}=${encodeURIComponent(JSON.stringify(value))}`)
+                    .join('&');
+
+                window.location.href = `/download/txt?${queryString}`;
+            } catch (error) {
+                console.error('Erro ao gerar TXT:', error);
+                alert('Erro ao gerar arquivo de texto. Por favor, tente novamente.');
+            }
+        }
+
+        function copyToClipboard() {
+            const content = document.querySelector('.document-container').innerText;
+            navigator.clipboard.writeText(content)
+                .then(() => alert('Conteúdo copiado para a área de transferência!'))
+                .catch(err => alert('Erro ao copiar conteúdo: ' + err));
+        }
+    </script>
+</body>
+</html> 
