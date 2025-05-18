@@ -115,7 +115,7 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 
 ## Autores
 
-- **Guilherme Kaschny Bastian** - [GitHub](https://github.com/seu-usuario)
+- **Dr Dheiver Francisco Santos** 
 
 ## Agradecimentos
 
